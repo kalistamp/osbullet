@@ -35,6 +35,7 @@ basic = ['https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjk
 
 
 sources = [
+    '- - - SOURCES:',
     'https://github.com/kalistamp',
     'https://www.google.com/chrome/',
     'https://twitter.com/1800otrack',
@@ -72,7 +73,13 @@ setup.exe --uninstall --system-level --verbose-logging --force-uninstall
 
 vscode = """
 
-                        VS_CODE Extensions :
+                        VS_CODE Download / Extensions :
+
+
+https://code.visualstudio.com/download
+
+cd Downloads
+sudo apt install ./<code_amd64.deb> 
 
 cobalt2 theme
 codestackr theme
@@ -95,10 +102,10 @@ def Chrome():
             time.sleep(3)
             webbrowser.open_new_tab(url)
     elif choice == 'p':
-        for number, links in enumerate(extension):
+        for number, links in enumerate(sources):
             print(number, links)
         print(x*2)
-        for number, links in enumerate(sources):
+        for number, links in enumerate(extension):
             print(number, links)
         print(x*2)       
         print(methods)
