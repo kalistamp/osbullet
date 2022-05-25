@@ -15,7 +15,6 @@ print(x*2)
 
 extension = [
     'https://therecap.org/chrome-ex/',
-    'https://www.qbittorrent.org/download.php',
         'https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb?hl=en',
         'https://chrome.google.com/webstore/detail/photosint/gonhdjmkgfkokhkflfhkbiagbmoolhcd/related?hl=nl',
         'https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag?hl=en',
@@ -47,9 +46,11 @@ sources = [
     '- - - SOURCES:',
     'https://github.com/kalistamp',
     'https://www.google.com/chrome/',
+    'https://www.qbittorrent.org/download.php',
     'https://www.win-rar.com/download.html?&L=0',
+    'https://desktop.telegram.org/',
     'https://twitter.com/1800otrack',
-    'https://wallpaperbat.com/img/430531-usa-lake-mountains-stones-scenery-lake-tahoe-nevada-nature-407420.jpg',
+    'https://wallpaperbat.com/img/430531-usa-lake-mountains-stones-scenery-lake-tahoe-nevada-nature-407420.jpg'
 ]
 
 methods = """
