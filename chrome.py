@@ -47,6 +47,7 @@ sources = [
     '- - - SOURCES:',
     'https://github.com/kalistamp',
     'https://www.google.com/chrome/',
+    'https://www.win-rar.com/download.html?&L=0',
     'https://twitter.com/1800otrack',
     'https://wallpaperbat.com/img/430531-usa-lake-mountains-stones-scenery-lake-tahoe-nevada-nature-407420.jpg',
 ]
