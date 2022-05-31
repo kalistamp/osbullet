@@ -73,6 +73,16 @@ wget -
 sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 
 
+                        Disable Windows Auto Update:
+
+Fire up the Run command (Win + R). Type in “services.msc” and hit Enter.
+
+Select the Windows Update service from the Services list
+(Right above Windows Update Service Media...)
+
+Click on the “General” tab and change the “Startup Type” to “Disabled”
+
+[Restart Machine]
 
                         Browser Uninstall Guides:
 
