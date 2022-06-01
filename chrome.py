@@ -10,7 +10,8 @@ print('TABLE OF CONTENTS:')
 print(x)
 print('All (a): Open all the Extensions ')
 print('Basics (b): Just the basic Extensions ')
-print('Print (p): Print out Extension List & Guides ')
+print('OSINT (o): Osint Extentions ')
+print('Print (p): Print out Extensions List & Guides ')
 print(x*2)
 
 extension = [
@@ -44,6 +45,29 @@ basic = [
     'https://chrome.google.com/webstore/detail/github-repository-size/apnjnioapinblneaedefcnopcjepgkci'
 ]
 
+OSINT = [
+
+'https://chrome.google.com/webstore/detail/vortimo-osint-tool/mnakbpdnkedaegeiaoakkjafhoidklnf',
+'https://chrome.google.com/webstore/detail/gotanda/jbmdcdfnnpenkgliplbglfpninigbiml',
+'https://chrome.google.com/webstore/detail/fast-advanced-google-sear/idijdjdcncjcgmeiipcnkpjedhgepalk',
+'https://chrome.google.com/webstore/detail/treeverse/aahmjdadniahaicebomlagekkcnlcila?hl=en',
+'https://chrome.google.com/webstore/detail/exif-viewer-pro/mmbhfeiddhndihdjeganjggkmjapkffm',
+'https://chrome.google.com/webstore/detail/fake-news-debunker-by-inv/mhccpoafgdgbhnjfhkcmgknndkeenfhe?hl=en',
+'https://chrome.google.com/webstore/detail/tineye-reverse-image-sear/haebnnbpedcbhciplfhjjkbafijpncjl',
+'https://chrome.google.com/webstore/detail/search-by-image/cnojnbdhbhnkbcieeekonklommdnndci',
+'https://chrome.google.com/webstore/detail/distill-web-monitor/inlikjemeeknofckkjolnjbpehgadgge?hl=en-US',
+'https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg?hl=en-US',
+'https://chrome.google.com/webstore/detail/nimbus-screenshot-screen/bpconcjcammlapcogcnnelfmaeghhagj',
+'https://chrome.google.com/webstore/detail/go-back-in-time/hgdahcpipmgehmaaankiglanlgljlakj',
+'https://chrome.google.com/webstore/detail/wayback-machine/fpnmgdkabkmnadcjpehmlllkndpkmiak',
+'https://chrome.google.com/webstore/detail/instant-data-scraper/ofaokhiedipichpaobibbnahnkdoiiah',
+'https://chrome.google.com/webstore/detail/email-extract/ejecpjcajdpbjbmlcojcohgenjngflac',
+'https://chrome.google.com/webstore/detail/hunter-email-finder-exten/hgmhmanijnjhaffoampdlllchpolkdnj',
+'https://chrome.google.com/webstore/detail/osiris-osint-reputation-i/jjdjccppehnjdennppcnlnaadcdlffdf',
+'https://chrome.google.com/webstore/detail/sputnik/manapjdamopgbpimgojkccikaabhmocd',
+'https://github.com/mitchmoser/sputnik'
+
+]
 
 sources = [
     '- - - SOURCES:',
@@ -114,22 +138,28 @@ python
 
 """
 
+KITCHEN_TABLE = extension + OSINT 
+
 def Chrome():
     choice = input(f'What Section of would you like to open? \n [Enter the Letter]: ')
     print(x*2)
     if choice == 'a':
-        for url in extension:
+        for url in KITCHEN_TABLE:
             time.sleep(3)
             webbrowser.open_new_tab(url)
     elif choice == 'b':
         for url in basic:
             time.sleep(3)
             webbrowser.open_new_tab(url)
+    elif choice == 'o':
+        for url in OSINT:
+            time.sleep(3)
+            webbrowser.open_new_tab(url)
     elif choice == 'p':
         for number, links in enumerate(sources):
             print(number, links)
         print(x*2)
-        for number, links in enumerate(extension):
+        for number, links in enumerate(KITCHEN_TABLE):
             print(number, links)
         print(x*2)       
         print(methods)
