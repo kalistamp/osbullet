@@ -73,6 +73,7 @@ sources = [
     '- - - SOURCES:',
     'https://github.com/kalistamp',
     'https://www.google.com/chrome/',
+    'https://www.torproject.org/download/',
     'https://www.qbittorrent.org/download.php',
     'https://www.win-rar.com/download.html?&L=0',
     'https://desktop.telegram.org/',
@@ -135,6 +136,11 @@ fluent icons
 tabnine
 vscode-icons
 python
+
+
+[+] Unzip and Download a Deb File:
+
+sudo apt install </.deb> 
 
 """
 
