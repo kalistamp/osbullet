@@ -74,6 +74,7 @@ sources = [
     'https://github.com/kalistamp',
     'https://www.google.com/chrome/',
     'https://www.torproject.org/download/',
+    'https://mullvad.net/en/download',
     'https://www.qbittorrent.org/download.php',
     'https://www.win-rar.com/download.html?&L=0',
     'https://desktop.telegram.org/',
