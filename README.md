@@ -4,9 +4,10 @@ Additions to this always being added....
 
 ***
 
-Main Sources:
+### Main Sources:
 
 * https://www.google.com/chrome/
+* https://www.torproject.org/download/
 * https://www.qbittorrent.org/download.php
 * https://www.win-rar.com/download.html?&L=0
 * https://desktop.telegram.org/
