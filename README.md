@@ -2,6 +2,8 @@ New Os Setup :
 
 Additions to this always being added....
 
+* [TLDR_Command Line](https://github.com/tldr-pages/tldr) - Enter "tldr command name" and get a brief description with examples of how to use it.
+
 ***
 
 ### Main Sources:
