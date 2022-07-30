@@ -90,21 +90,6 @@ sources = [
 
 methods = """
 
-                        OHMYZSHELL (2 Methods) :
-
-apt install zsh
-
-apt install git
-
-curl -
-
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-wget -
-
-sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
-
-
                         Disable Windows Auto Update:
 
 Fire up the Run command (Win + R). Type in “services.msc” and hit Enter.
@@ -123,6 +108,28 @@ Microsoft edge windows 10 (Settings | Apps | Edge Version) -
 cd %PROGRAMFILES(X86)%\Microsoft\Edge\Application\<EDGE_Version_#>\Installer 
 
 setup.exe --uninstall --system-level --verbose-logging --force-uninstall
+
+                        OHMYZSHELL (2 Methods):
+
+apt install zsh
+
+apt install git
+
+curl -
+
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+wget -
+
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+
+                        YOUTUBE-DL (Linux):
+
+sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
+
+sudo chmod a+rx /usr/local/bin/youtube-dl
+
+sudo pip install --upgrade youtube_dl
 
 """
 
