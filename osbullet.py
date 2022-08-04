@@ -6,6 +6,8 @@ import time
 x = ' '
 
 print(x*2)
+print(' [ Kalistamp | https://github.com/kalistamp ] ')
+print(x*2)
 print('TABLE OF CONTENTS:')
 print(x)
 print('All (a): Open all the Extensions ')
@@ -108,6 +110,28 @@ Microsoft edge windows 10 (Settings | Apps | Edge Version) -
 cd %PROGRAMFILES(X86)%\Microsoft\Edge\Application\<EDGE_Version_#>\Installer 
 
 setup.exe --uninstall --system-level --verbose-logging --force-uninstall
+
+                        FISH - Command Line Shell (https://fishshell.com/)
+
+                        [Enter command "fish" to activate Command Shell]
+
+Step 1: Install fish repository in ubuntu - 
+
+sudo apt-add-repository ppa:fish-shell/release-3 
+
+Step 2: Update and upgrade repository - 
+
+sudo apt-get update && sudo apt-get upgrade
+
+Step 3: Install fish shell - 
+
+sudo apt-get install fish
+
+Step 4: Make fish shell as default shell - 
+
+sudo chsh -s /usr/local/bin/fish
+
+[ Restart Machine and test new Command Line shell]
 
                         OHMYZSHELL (2 Methods):
 
