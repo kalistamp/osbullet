@@ -22,6 +22,7 @@ Additions to this always being added....
 * * *
 
 * Ghost in a shell: [Game](https://www.retrogames.cc/psx-games/ghost-in-the-shell.html)
+* Fatal Fury: [Game](https://www.retrogames.cc/segacd-games/fatal-fury-special.html)
 
 
 
