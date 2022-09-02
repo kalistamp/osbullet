@@ -7,6 +7,7 @@ Additions to this always being added....
 ***
 
 ### Main Sources:
+( sudo apt install </.deb>  )
 
 * https://www.google.com/chrome/
 * https://www.torproject.org/download/
