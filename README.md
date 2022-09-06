@@ -16,6 +16,7 @@ Additions to this always being added....
 * https://www.win-rar.com/download.html?&L=0
 * https://desktop.telegram.org/
 * https://www.emeditor.com/
+* https://www.advanced-ip-scanner.com/ - - - > [Overview](https://www.huntandhackett.com/blog/advanced-ip-scanner-the-preferred-scanner-in-the-apt-toolbox)
 * https://libgen.onl/library-genesis/
 * https://wallpaperbat.com/img/430531-usa-lake-mountains-stones-scenery-lake-tahoe-nevada-nature-407420.jpg
 * https://i.ytimg.com/vi/uw81DtZ4oaM/maxresdefault.jpg
