@@ -24,6 +24,8 @@ Additions to this always being added....
 
 ### Wallpaper
 
+[sock] https://raw.githubusercontent.com/javascript-obfuscator/javascript-obfuscator/master/images/logo.png
+
 * https://mspoweruser.com/wp-content/uploads/2018/11/windowslight.jpg
 * https://wallpaperbat.com/img/430531-usa-lake-mountains-stones-scenery-lake-tahoe-nevada-nature-407420.jpg
 * https://i.ytimg.com/vi/uw81DtZ4oaM/maxresdefault.jpg
