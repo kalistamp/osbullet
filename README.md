@@ -32,6 +32,7 @@ Additions to this always being added....
 
 Exit and run - ```kazam```
 
+Drop Filesize:  ```Files -> Preferences - Screencast | Record with: VP8(Webm) or MP4```
 
 * * *
 
