@@ -22,7 +22,20 @@ Additions to this always being added....
 
 * * *
 
-### Wallpaper
+### Kazam Install:
+
+```sudo apt update```
+
+```sudo apt install kazam```
+
+```sudo apt install python3-cairo python3-xlib```
+
+Exit and run - ```kazam```
+
+
+* * *
+
+### Wallpaper:
 
 [sock] https://raw.githubusercontent.com/javascript-obfuscator/javascript-obfuscator/master/images/logo.png
 
