@@ -111,7 +111,19 @@ cd %PROGRAMFILES(X86)%\Microsoft\Edge\Application\<EDGE_Version_#>\Installer
 
 setup.exe --uninstall --system-level --verbose-logging --force-uninstall
 
-                        FISH - Command Line Shell (https://fishshell.com/)
+                        KAZAM - Linux Screen Recorder:
+                        
+sudo apt update
+
+sudo apt install kazam
+
+sudo apt install python3-cairo python3-xlib
+
+Exit and run - kazam
+
+Drop Filesize: Files -> Preferences - Screencast | Record with: VP8(Webm) or MP4
+
+                        FISH - Command Line Shell (https://fishshell.com/):
 
                         [Enter command "fish" to activate Command Shell]
 
