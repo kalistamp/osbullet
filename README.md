@@ -38,7 +38,7 @@ Drop Filesize:  ```Files -> Preferences - Screencast | Record with: VP8(Webm) or
 
 ### Wallpaper:
 
-[sock] https://raw.githubusercontent.com/javascript-obfuscator/javascript-obfuscator/master/images/logo.png
+[Flickr] https://www.flickr.com/photos/196713895@N08/
 
 * https://www.flickr.com/photos/loupiote/3479487100
 * https://wallpaperbat.com/img/430531-usa-lake-mountains-stones-scenery-lake-tahoe-nevada-nature-407420.jpg
