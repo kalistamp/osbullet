@@ -22,6 +22,36 @@ Additions to this always being added....
 
 * * *
 
+### Chrome Install: 
+
+* First [Download](https://www.google.com/chrome/) Chrome-Deb
+
+```sudo apt update```
+
+```sudo install google-chrome-stable_current_amd64.deb```
+
+* Add to favorites 
+
+### OpenOffice Install:
+
+```sudo apt update```
+
+```wget https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.13/binaries/en-GB/Apache_OpenOffice_4.1.13_Linux_x86-64_install-deb_en-GB.tar.gz```
+
+```tar xvf Apache_OpenOffice_4.1.13_Linux_x86-64_install-deb_en-GB.tar.gz```
+
+```cd en-GB```
+
+```cd DEBS```
+
+```sudo dpkg -i *.deb```
+
+```cd desktop-integration```
+
+```sudo dpkg -i *.deb```
+
+* DONE, RESTART TERMINAL AND CHECK IF OPENOFFICE IS INSTALLED IN APPLICATIONS AT TOP LEFT OF SCREEN
+
 ### Kazam Install:
 
 ```sudo apt update```
