@@ -28,7 +28,7 @@ Additions to this always being added....
 
 ```sudo apt update```
 
-```sudo install google-chrome-stable_current_amd64.deb```
+```sudo apt install google-chrome-stable_current_amd64.deb```
 
 * Add to favorites 
 
