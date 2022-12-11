@@ -15,6 +15,7 @@ Additions to this always being added....
 * https://www.qbittorrent.org/download.php
 * https://www.win-rar.com/download.html?&L=0
 * https://desktop.telegram.org/
+* https://discord.com/download
 * https://www.emeditor.com/
 * https://www.advanced-ip-scanner.com/ - - - > [Overview](https://www.huntandhackett.com/blog/advanced-ip-scanner-the-preferred-scanner-in-the-apt-toolbox)
 * https://libgen.onl/library-genesis/
