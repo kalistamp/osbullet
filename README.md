@@ -10,6 +10,7 @@ Additions to this always being added....
 ( sudo apt install </.deb>  )
 
 * https://www.google.com/chrome/
+* https://brave.com/linux/#release-channel-installation
 * https://www.torproject.org/download/
 * https://mullvad.net/en/download/
 * https://www.qbittorrent.org/download.php
