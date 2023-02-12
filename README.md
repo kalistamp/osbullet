@@ -34,6 +34,10 @@ Additions to this always being added....
 
 * Add to favorites 
 
+### Joblin Install:
+
+```wget -O - https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh | bash```
+
 ### OpenOffice Install:
 
 ```sudo apt update```
