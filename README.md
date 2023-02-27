@@ -72,6 +72,17 @@ Drop Filesize:  ```Files -> Preferences - Screencast | Record with: VP8(Webm) or
 
 * * *
 
+### FireFox addons:
+
+[uBlock Origin](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/) - is an efficient wide-spectrum blocker that is easy on memory, and yet can load and enforce thousands more filters than other popular blockers out there.
+
+[Oecentraleyes](https://addons.mozilla.org/en-US/firefox/addon/decentraleyes/) emulates Content Delivery Networks locally by intercepting requests, finding the required resource, and injecting it into the environment.
+
+[ClearURLs](https://addons.mozilla.org/en-US/firefox/addon/clearurls/) will automatically remove tracking elements from URLs to help protect your prtvacy when browsing through the Internet.
+
+
+* * *
+
 ### Wallpaper:
 
 [Flickr] https://www.flickr.com/photos/196713895@N08/
