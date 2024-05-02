@@ -11,8 +11,9 @@ Additions to this always being added....
 
 * https://www.google.com/chrome/
 * https://brave.com/linux/#release-channel-installation
+* https://www.rainmeter.net/
 * https://www.torproject.org/download/
-* https://mullvad.net/en/download/
+* https://mullvad.net/en/download/browser/windows
 * https://www.qbittorrent.org/download.php
 * https://www.win-rar.com/download.html?&L=0
 * https://desktop.telegram.org/
