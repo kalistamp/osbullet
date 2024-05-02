@@ -9,6 +9,7 @@ New Os Setup :
 * https://www.google.com/chrome/ - ```sudo apt install </.deb>```
 * https://brave.com/linux/#release-channel-installation
 * https://www.rainmeter.net/
+* https://visualstudio.microsoft.com/downloads/
 * https://www.torproject.org/download/
 * https://mullvad.net/en/download/browser/windows
 * https://www.qbittorrent.org/download.php
