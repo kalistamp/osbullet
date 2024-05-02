@@ -30,7 +30,11 @@ New Os Setup :
 
 ```sudo apt install google-chrome-stable_current_amd64.deb```
 
-* Add to favorites 
+* Add to favorites
+
+### WD Disable:
+
+* https://github.com/ionuttbara/windows-defender-remover
 
 ### Joblin Install:
 
