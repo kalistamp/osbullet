@@ -7,9 +7,8 @@ Additions to this always being added....
 ***
 
 ### Main Sources:
-( sudo apt install </.deb>  )
 
-* https://www.google.com/chrome/
+* https://www.google.com/chrome/ - ```sudo apt install </.deb>```
 * https://brave.com/linux/#release-channel-installation
 * https://www.rainmeter.net/
 * https://www.torproject.org/download/
