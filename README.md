@@ -10,13 +10,14 @@ New Os Setup :
 * https://brave.com/linux/#release-channel-installation
 * https://www.rainmeter.net/
 * https://visualstudio.microsoft.com/downloads/
+* https://www.7-zip.org/download.html
 * https://www.torproject.org/download/
 * https://mullvad.net/en/download/browser/windows
 * https://www.qbittorrent.org/download.php
 * https://www.win-rar.com/download.html?&L=0
 * https://desktop.telegram.org/
 * https://discord.com/download
-* https://www.emeditor.com/
+* https://www.emeditor.com/download/
 * https://www.advanced-ip-scanner.com/ - - - > [Overview](https://www.huntandhackett.com/blog/advanced-ip-scanner-the-preferred-scanner-in-the-apt-toolbox)
 * https://libgen.onl/library-genesis/
 * https://twitter.com/1800otrac
