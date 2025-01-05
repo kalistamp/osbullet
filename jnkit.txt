@@ -4,73 +4,85 @@ import requests
 from bs4 import BeautifulSoup
 import time
 
-def get_all_text(element, level=0):
-    """Recursively get all text from an element and its children"""
+def clean_text(text):
+    """Clean and format text to be readable"""
+    if not text:
+        return ""
+    # Remove extra whitespace and newlines
+    cleaned = ' '.join(text.split())
+    return cleaned
+
+def extract_readable_text(element):
+    """Extract only the readable text from an element"""
     texts = []
     
-    # Get element's own text
-    if element.string and element.string.strip():
-        texts.append("  " * level + element.string.strip())
-    
-    # Get text from children
+    # Skip script, style and other non-content tags
+    if element.parent.name in ['script', 'style', 'meta', 'link', 'noscript']:
+        return texts
+
+    # Get this element's text if it exists
+    if element.string and clean_text(element.string):
+        texts.append(clean_text(element.string))
+
+    # Get text from all child elements
     for child in element.children:
-        if child.name:  # Only process HTML elements
-            child_text = get_all_text(child, level + 1)
-            texts.extend(child_text)
-    
+        if hasattr(child, 'children'):
+            texts.extend(extract_readable_text(child))
+            
     return texts
 
 def scrape_page(url):
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
     }
     
     try:
-        # Get the page content
         response = requests.get(url, headers=headers, timeout=30)
-        
-        # Save raw HTML for debugging
-        with open(f'debug_raw_html.txt', 'w', encoding='utf-8') as f:
-            f.write(response.text)
-            
-        # Create BeautifulSoup object
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        # Get all text content recursively
-        main_content = soup.find('main')
-        if main_content:
-            all_text = get_all_text(main_content)
-            return '\n'.join(all_text)
-        else:
-            return "No main content found"
-            
-    except Exception as e:
-        return f"Error scraping: {str(e)}"
+        # Find all text content
+        all_text = []
+        
+        # Process all paragraphs (usually contains main text)
+        for p in soup.find_all('p'):
+            text = clean_text(p.get_text())
+            if text:
+                all_text.append(text)
 
-# Main script
-print("Starting to scrape website...")
+        # Process all spans (often contains labels and other text)
+        for span in soup.find_all('span'):
+            text = clean_text(span.get_text())
+            if text:
+                all_text.append(text)
+
+        # Process all divs (might contain other text)
+        for div in soup.find_all('div'):
+            if div.find_parents(['p', 'span']):  # Skip if inside already processed elements
+                continue
+            text = clean_text(div.get_text())
+            if text and text not in all_text:  # Avoid duplicates
+                all_text.append(text)
+
+        return '\n\n'.join(filter(None, all_text))  # Join with double newlines for readability
+        
+    except Exception as e:
+        print(f"Error scraping: {str(e)}")
+        return ""
+
+print("Starting to scrape readable text...")
 base_url = "https://www.wantstobehired.com"
 
-# Open file to save all content
-with open('complete_text_content.txt', 'w', encoding='utf-8') as f:
-    # For each page
-    for page in range(1, 95):  # 94 pages
-        print(f"\nScraping page {page}/94")
+with open('readable_text.txt', 'w', encoding='utf-8') as f:
+    for page in range(1, 95):
+        print(f"Processing page {page}/94")
         
-        # Get URL for current page
         current_url = f"{base_url}?page={page}" if page > 1 else base_url
-        print(f"URL: {current_url}")
-        
-        # Get page content
         content = scrape_page(current_url)
         
-        # Write to file with clear separator
-        f.write(f"\n\n{'='*50}\nPAGE {page}\n{'='*50}\n\n")
+        # Write to file with clear page marker
+        f.write(f"\n\n{'='*30} PAGE {page} {'='*30}\n\n")
         f.write(content)
         
-        # Be nice to the server
-        time.sleep(2)
+        time.sleep(2)  # Be nice to the server
 
-print("\nDone! Check complete_text_content.txt for results")
-print("Also check debug_raw_html.txt to see the raw HTML received")
+print("Done! Check readable_text.txt for the extracted text content.")
