@@ -1,84 +1,51 @@
 #!/usr/bin/env python3
 
 import requests
+import re
 from bs4 import BeautifulSoup
-import time
 
-def extract_content(soup):
-    """Extract all visible content from job listings"""
-    all_content = []
+# Function to extract all text between ANY HTML tags
+def extract_all_text(html_content):
+    # First remove all script and style elements
+    soup = BeautifulSoup(html_content, 'html.parser')
+    for script in soup(['script', 'style']):
+        script.decompose()
     
-    # Find all job listing divs (these contain the actual content we want)
-    listings = soup.find_all('div', class_='border rounded-md m-2 px-5 py-5 bg-white')
+    # Get all text
+    text = soup.get_text(separator='\n')
     
-    for listing in listings:
-        # Skip any promotional content
-        if 'Promoted' in listing.text:
-            continue
-            
-        content = []
-        # Get all paragraphs from the listing
-        for p in listing.find_all('p'):
-            text = p.get_text(strip=True)
-            if text:
-                content.append(text)
-                
-        # Get any links (like HN links)
-        for a in listing.find_all('a'):
-            if 'news.ycombinator.com' in a.get('href', ''):
-                content.append(f"HN Link: {a['href']}")
-                
-        if content:
-            all_content.append('\n'.join(content))
-            all_content.append('-' * 50)  # Add separator between listings
-            
-    return '\n'.join(all_content)
-
-def scrape_page(url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-    }
+    # Clean up the text
+    lines = (line.strip() for line in text.splitlines())
+    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
     
-    try:
-        print(f"Fetching: {url}")
-        response = requests.get(url, headers=headers, timeout=30)
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        # First save the raw HTML for debugging
-        with open('last_page_raw.html', 'w', encoding='utf-8') as f:
-            f.write(response.text)
-            
-        return extract_content(soup)
-        
-    except Exception as e:
-        print(f"Error scraping: {str(e)}")
-        return ""
+    # Drop blank lines and join
+    return '\n'.join(chunk for chunk in chunks if chunk)
 
 # Main script
-print("Starting to scrape job listings...")
-base_url = "https://www.wantstobehired.com"
+url = "https://www.wantstobehired.com/"
+headers = {'User-Agent': 'Mozilla/5.0'}
 
-with open('job_listings.txt', 'w', encoding='utf-8') as f:
-    for page in range(1, 95):  # 94 pages total
-        print(f"\nProcessing page {page}/94")
-        
-        current_url = f"{base_url}?page={page}" if page > 1 else base_url
-        content = scrape_page(current_url)
-        
-        if content.strip():
-            f.write(f"\n\n{'='*20} PAGE {page} {'='*20}\n\n")
-            f.write(content)
-            print(f"Found content on page {page}")
-        else:
-            print(f"No content found on page {page}")
-        
-        # Also save the current page content to a separate file
-        with open(f'page_{page}_content.txt', 'w', encoding='utf-8') as page_file:
-            page_file.write(content)
-        
-        time.sleep(2)  # Be nice to the server
+print("Starting text extraction...")
 
-print("\nDone! Check these files:")
-print("1. job_listings.txt - Contains all listings")
-print("2. page_X_content.txt - Individual page contents")
-print("3. last_page_raw.html - Raw HTML of last page fetched")
+with open('webpage_text.txt', 'w', encoding='utf-8') as outfile:
+    for page in range(1, 95):
+        try:
+            print(f"\nGetting page {page}")
+            
+            # Get page URL
+            page_url = f"{url}?page={page}" if page > 1 else url
+            
+            # Get page content
+            response = requests.get(page_url, headers=headers)
+            
+            # Extract all text
+            text = extract_all_text(response.text)
+            
+            # Write to file
+            outfile.write(f"\n\n=== PAGE {page} ===\n\n")
+            outfile.write(text)
+            
+        except Exception as e:
+            print(f"Error on page {page}: {e}")
+
+print("\nDone! Check webpage_text.txt")
