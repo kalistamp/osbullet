@@ -4,32 +4,35 @@ import requests
 from bs4 import BeautifulSoup
 import time
 
-def clean_text(text):
-    """Clean and format text to be readable"""
-    if not text:
-        return ""
-    # Remove extra whitespace and newlines
-    cleaned = ' '.join(text.split())
-    return cleaned
-
-def extract_readable_text(element):
-    """Extract only the readable text from an element"""
-    texts = []
+def extract_content(soup):
+    """Extract all visible content from job listings"""
+    all_content = []
     
-    # Skip script, style and other non-content tags
-    if element.parent.name in ['script', 'style', 'meta', 'link', 'noscript']:
-        return texts
-
-    # Get this element's text if it exists
-    if element.string and clean_text(element.string):
-        texts.append(clean_text(element.string))
-
-    # Get text from all child elements
-    for child in element.children:
-        if hasattr(child, 'children'):
-            texts.extend(extract_readable_text(child))
+    # Find all job listing divs (these contain the actual content we want)
+    listings = soup.find_all('div', class_='border rounded-md m-2 px-5 py-5 bg-white')
+    
+    for listing in listings:
+        # Skip any promotional content
+        if 'Promoted' in listing.text:
+            continue
             
-    return texts
+        content = []
+        # Get all paragraphs from the listing
+        for p in listing.find_all('p'):
+            text = p.get_text(strip=True)
+            if text:
+                content.append(text)
+                
+        # Get any links (like HN links)
+        for a in listing.find_all('a'):
+            if 'news.ycombinator.com' in a.get('href', ''):
+                content.append(f"HN Link: {a['href']}")
+                
+        if content:
+            all_content.append('\n'.join(content))
+            all_content.append('-' * 50)  # Add separator between listings
+            
+    return '\n'.join(all_content)
 
 def scrape_page(url):
     headers = {
@@ -37,52 +40,45 @@ def scrape_page(url):
     }
     
     try:
+        print(f"Fetching: {url}")
         response = requests.get(url, headers=headers, timeout=30)
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        # Find all text content
-        all_text = []
-        
-        # Process all paragraphs (usually contains main text)
-        for p in soup.find_all('p'):
-            text = clean_text(p.get_text())
-            if text:
-                all_text.append(text)
-
-        # Process all spans (often contains labels and other text)
-        for span in soup.find_all('span'):
-            text = clean_text(span.get_text())
-            if text:
-                all_text.append(text)
-
-        # Process all divs (might contain other text)
-        for div in soup.find_all('div'):
-            if div.find_parents(['p', 'span']):  # Skip if inside already processed elements
-                continue
-            text = clean_text(div.get_text())
-            if text and text not in all_text:  # Avoid duplicates
-                all_text.append(text)
-
-        return '\n\n'.join(filter(None, all_text))  # Join with double newlines for readability
+        # First save the raw HTML for debugging
+        with open('last_page_raw.html', 'w', encoding='utf-8') as f:
+            f.write(response.text)
+            
+        return extract_content(soup)
         
     except Exception as e:
         print(f"Error scraping: {str(e)}")
         return ""
 
-print("Starting to scrape readable text...")
+# Main script
+print("Starting to scrape job listings...")
 base_url = "https://www.wantstobehired.com"
 
-with open('readable_text.txt', 'w', encoding='utf-8') as f:
-    for page in range(1, 95):
-        print(f"Processing page {page}/94")
+with open('job_listings.txt', 'w', encoding='utf-8') as f:
+    for page in range(1, 95):  # 94 pages total
+        print(f"\nProcessing page {page}/94")
         
         current_url = f"{base_url}?page={page}" if page > 1 else base_url
         content = scrape_page(current_url)
         
-        # Write to file with clear page marker
-        f.write(f"\n\n{'='*30} PAGE {page} {'='*30}\n\n")
-        f.write(content)
+        if content.strip():
+            f.write(f"\n\n{'='*20} PAGE {page} {'='*20}\n\n")
+            f.write(content)
+            print(f"Found content on page {page}")
+        else:
+            print(f"No content found on page {page}")
+        
+        # Also save the current page content to a separate file
+        with open(f'page_{page}_content.txt', 'w', encoding='utf-8') as page_file:
+            page_file.write(content)
         
         time.sleep(2)  # Be nice to the server
 
-print("Done! Check readable_text.txt for the extracted text content.")
+print("\nDone! Check these files:")
+print("1. job_listings.txt - Contains all listings")
+print("2. page_X_content.txt - Individual page contents")
+print("3. last_page_raw.html - Raw HTML of last page fetched")
