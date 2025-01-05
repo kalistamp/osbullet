@@ -1,0 +1,105 @@
+#!/usr/bin/env python3
+
+import requests
+from bs4 import BeautifulSoup
+import csv
+import time
+import sys
+from datetime import datetime
+import os
+
+class JobScraper:
+    def __init__(self):
+        self.base_url = "https://www.wantstobehired.com/"
+        self.headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+        self.total_pages = 94
+
+    def get_page_content(self, page_num):
+        url = f"{self.base_url}?page={page_num}"
+        try:
+            response = requests.get(url, headers=self.headers)
+            response.raise_for_status()
+            return response.text
+        except requests.RequestException as e:
+            print(f"\033[91mError fetching page {page_num}: {e}\033[0m")
+            return None
+
+    def parse_job_listings(self, html_content):
+        soup = BeautifulSoup(html_content, 'html.parser')
+        job_cards = soup.find_all('div', class_='border rounded-md m-2 px-5 py-5 bg-white')
+        jobs = []
+
+        for card in job_cards:
+            # Skip promoted content
+            if 'Promoted' in card.get_text():
+                continue
+
+            job = {}
+            # Extract all fields with font-semibold class
+            for field in card.find_all('span', class_='font-semibold'):
+                field_name = field.text.strip(':').lower().replace(' ', '_')
+                # Get the text after the field label
+                field_value = field.find_next_sibling(text=True)
+                if field_value:
+                    job[field_name] = field_value.strip()
+                else:
+                    # For fields that might be in a different format
+                    field_value = field.parent.get_text().replace(field.text, '').strip()
+                    job[field_name] = field_value.strip(':').strip()
+
+            # Get HN link if available
+            hn_link = card.find('a', href=lambda x: x and 'news.ycombinator.com' in x)
+            if hn_link:
+                job['hn_link'] = hn_link['href']
+
+            if job:  # Only add if we found any data
+                jobs.append(job)
+
+        return jobs
+
+    def save_to_csv(self, all_jobs):
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"wantstobehired_jobs_{timestamp}.csv"
+        
+        if all_jobs:
+            # Get all unique fields from all jobs
+            fieldnames = set()
+            for job in all_jobs:
+                fieldnames.update(job.keys())
+            fieldnames = sorted(list(fieldnames))
+
+            with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(all_jobs)
+            
+            print(f"\033[92mData saved to {filename}\033[0m")
+            print(f"\033[92mTotal jobs collected: {len(all_jobs)}\033[0m")
+        else:
+            print("\033[91mNo data to save!\033[0m")
+
+    def run(self):
+        all_jobs = []
+        
+        print("\033[94mStarting job scraping...\033[0m")
+        for page in range(1, self.total_pages + 1):
+            sys.stdout.write(f"\rProcessing page {page}/{self.total_pages}")
+            sys.stdout.flush()
+            
+            content = self.get_page_content(page)
+            if content:
+                jobs = self.parse_job_listings(content)
+                all_jobs.extend(jobs)
+                
+                # Be nice to the server
+                time.sleep(2)
+        
+        print("\n\033[94mScraping completed!\033[0m")
+        self.save_to_csv(all_jobs)
+
+if __name__ == "__main__":
+    print("\033[95m=== WantsToBeHired Job Scraper ===\033[0m")
+    scraper = JobScraper()
+    scraper.run()
