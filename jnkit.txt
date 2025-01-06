@@ -1,51 +1,58 @@
 #!/usr/bin/env python3
 
-import requests
-import re
-from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+from datetime import datetime
 
-# Function to extract all text between ANY HTML tags
-def extract_all_text(html_content):
-    # First remove all script and style elements
-    soup = BeautifulSoup(html_content, 'html.parser')
-    for script in soup(['script', 'style']):
-        script.decompose()
+def setup_driver():
+    options = Options()
+    options.add_argument('--headless')  # Run in headless mode
+    return webdriver.Firefox(options=options)
+
+def scrape_page(driver, url):
+    try:
+        driver.get(url)
+        # Wait for content to load
+        time.sleep(5)
+        
+        # Get all text content
+        return driver.find_element("tag name", "body").text
+        
+    except Exception as e:
+        print(f"Error scraping page: {e}")
+        return None
+
+def main():
+    print("Starting Firefox in headless mode...")
+    driver = setup_driver()
     
-    # Get all text
-    text = soup.get_text(separator='\n')
-    
-    # Clean up the text
-    lines = (line.strip() for line in text.splitlines())
-    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-    
-    # Drop blank lines and join
-    return '\n'.join(chunk for chunk in chunks if chunk)
+    try:
+        base_url = "https://www.wantstobehired.com/"
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_file = f'webpage_content_{timestamp}.txt'
+        
+        with open(output_file, 'w', encoding='utf-8') as f:
+            for page in range(1, 95):  # 94 pages total
+                print(f"\nProcessing page {page}/94")
+                
+                url = f"{base_url}?page={page}" if page > 1 else base_url
+                content = scrape_page(driver, url)
+                
+                if content:
+                    f.write(f"\n{'='*50}\nPAGE {page}\n{'='*50}\n\n")
+                    f.write(content)
+                    print(f"Content captured from page {page}")
+                
+                time.sleep(2)  # Be nice to the server
+                
+        print(f"\nDone! Results saved to {output_file}")
+        
+    finally:
+        driver.quit()
+        print("Browser closed.")
 
-# Main script
-url = "https://www.wantstobehired.com/"
-headers = {'User-Agent': 'Mozilla/5.0'}
-
-print("Starting text extraction...")
-
-with open('webpage_text.txt', 'w', encoding='utf-8') as outfile:
-    for page in range(1, 95):
-        try:
-            print(f"\nGetting page {page}")
-            
-            # Get page URL
-            page_url = f"{url}?page={page}" if page > 1 else url
-            
-            # Get page content
-            response = requests.get(page_url, headers=headers)
-            
-            # Extract all text
-            text = extract_all_text(response.text)
-            
-            # Write to file
-            outfile.write(f"\n\n=== PAGE {page} ===\n\n")
-            outfile.write(text)
-            
-        except Exception as e:
-            print(f"Error on page {page}: {e}")
-
-print("\nDone! Check webpage_text.txt")
+if __name__ == "__main__":
+    main()
