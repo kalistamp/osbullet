@@ -2,86 +2,27 @@
 
 import requests
 from bs4 import BeautifulSoup
-import time
-from datetime import datetime
 
-class ProfileScraper:
-    def __init__(self):
-        self.headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-        }
+# Get the webpage content
+url = "https://www.wantstobehired.com"
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+}
 
-    def get_content(self, url):
-        try:
-            response = requests.get(url, headers=self.headers, timeout=30)
-            return response.text
-        except Exception as e:
-            print(f"Error fetching page: {e}")
-            return None
+# Get the page and save the raw HTML first
+response = requests.get(url, headers=headers)
+with open('raw_page.html', 'w', encoding='utf-8') as f:
+    f.write(response.text)
+print("Saved raw HTML to raw_page.html")
 
-    def extract_profile_content(self, html):
-        if not html:
-            return []
-        
-        soup = BeautifulSoup(html, 'html.parser')
-        profiles = []
+# Parse with BeautifulSoup and save all found divs
+soup = BeautifulSoup(response.text, 'html.parser')
+divs = soup.find_all('div')
 
-        # Get every div that contains a profile (including all text content)
-        profile_divs = soup.find_all('div', class_='border rounded-md m-2 px-5 py-5 bg-white')
-        
-        for div in profile_divs:
-            # Skip promotional content
-            if 'Promoted' in div.text:
-                continue
-                
-            profile_text = []
-            
-            # Get ALL content from the profile div
-            text_elements = div.stripped_strings
-            profile_text.extend(text_elements)
-            
-            if profile_text:
-                # Join all text elements preserving structure
-                profiles.append('\n'.join(profile_text))
-        
-        return profiles
+with open('all_divs.txt', 'w', encoding='utf-8') as f:
+    for i, div in enumerate(divs):
+        f.write(f"\n\n=== DIV {i} ===\n")
+        f.write(f"Classes: {div.get('class', 'No classes')}\n")
+        f.write(f"Content:\n{div.text}\n")
 
-    def scrape_profiles(self):
-        base_url = "https://www.wantstobehired.com"
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        output_file = f'candidate_profiles_{timestamp}.txt'
-        
-        print(f"Starting to scrape candidate profiles...")
-        print(f"Output will be saved to: {output_file}")
-        
-        for page in range(1, 95):  # 94 pages total
-            print(f"\nProcessing page {page}/94")
-            
-            # Get page URL
-            url = f"{base_url}?page={page}" if page > 1 else base_url
-            
-            # Get and process content
-            html = self.get_content(url)
-            profiles = self.extract_profile_content(html)
-            
-            # Save profiles
-            if profiles:
-                print(f"Found {len(profiles)} profiles on page {page}")
-                with open(output_file, 'a', encoding='utf-8') as f:
-                    f.write(f"\n\n{'='*50} PAGE {page} {'='*50}\n\n")
-                    for profile in profiles:
-                        f.write(f"{profile}\n")
-                        f.write(f"{'-'*80}\n")
-            else:
-                print(f"No profiles found on page {page}")
-            
-            # Be nice to the server
-            time.sleep(2)
-        
-        print(f"\nScraping completed! All candidate profiles saved to {output_file}")
-
-if __name__ == "__main__":
-    print("Starting candidate profile scraper...")
-    scraper = ProfileScraper()
-    scraper.scrape_profiles()
+print("Saved all divs to all_divs.txt")
